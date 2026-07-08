@@ -1,10 +1,13 @@
 package com.yuri.piccolaarte.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -22,7 +25,7 @@ public class Category implements Serializable {
     @Column(nullable = false, unique = true, length = 100)
     private String slug;
 
-    @Column(length = 500)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
@@ -48,6 +51,10 @@ public class Category implements Serializable {
     public void preUpdate() {
         updatedAt = Instant.now();
     }
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     public Category() {
     }
@@ -115,6 +122,10 @@ public class Category implements Serializable {
 
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 
     @Override
