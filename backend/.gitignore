@@ -1,0 +1,44 @@
+# Maven / build
+target/
+*.class
+
+# Logs
+*.log
+logs/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/
+
+# Environment variables / local config
+.env
+.env.*
+!.env.example
+
+# Spring Boot local configs
+src/main/resources/application-local.properties
+src/main/resources/application-dev.properties
+src/main/resources/application-prod.properties
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Uploads / local files
+uploads/
+files/
+storage/
+
+# Test reports / coverage
+coverage/

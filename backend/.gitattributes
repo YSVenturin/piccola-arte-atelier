@@ -1,0 +1,28 @@
+* text=auto
+
+# Java / Spring files
+*.java text
+*.properties text
+*.xml text
+*.yml text
+*.yaml text
+*.sql text
+*.md text
+*.txt text
+
+# Shell scripts must use LF
+*.sh text eol=lf
+mvnw text eol=lf
+
+# Windows scripts use CRLF
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.jar binary
+*.zip binary
