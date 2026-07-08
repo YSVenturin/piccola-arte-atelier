@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "products")
@@ -64,6 +62,10 @@ public class Product implements Serializable {
 
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> productImages = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
@@ -222,16 +224,30 @@ public class Product implements Serializable {
         return categories;
     }
 
+    public List<ProductImage> getProductImages() {
+        return productImages;
+    }
+
+    public void addImage(ProductImage image) {
+        productImages.add(image);
+        image.setProduct(this);
+    }
+
+    public void removeImage(ProductImage image) {
+        productImages.remove(image);
+        image.setProduct(null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id);
+        return id != null && Objects.equals(id, product.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return getClass().hashCode();
     }
 
     @Override

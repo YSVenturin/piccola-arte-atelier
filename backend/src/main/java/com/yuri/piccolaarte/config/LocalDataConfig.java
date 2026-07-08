@@ -4,6 +4,7 @@ import com.yuri.piccolaarte.entities.Category;
 import com.yuri.piccolaarte.entities.Product;
 import com.yuri.piccolaarte.repositories.CategoryRepository;
 import com.yuri.piccolaarte.repositories.ProductRepository;
+import com.yuri.piccolaarte.entities.ProductImage;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -177,6 +178,86 @@ public class LocalDataConfig implements CommandLineRunner {
             );
 
             productRepository.saveAll(List.of(p1, p2, p3, p4, p5, p6));
+
+            p1.addImage(new ProductImage(
+                    null,
+                    "/images/products/incensario-casinha-azul-1.jpg",
+                    "Incensário artesanal em formato de casinha azul",
+                    true,
+                    1
+            ));
+
+            p1.addImage(new ProductImage(
+                    null,
+                    "/images/products/incensario-casinha-azul-2.jpg",
+                    "Detalhe do incensário casinha azul feito em cerâmica fria",
+                    false,
+                    2
+            ));
+
+            p2.addImage(new ProductImage(
+                    null,
+                    "/images/products/macas-encantadas-1.jpg",
+                    "Conjunto de maçãs decorativas coloridas em cerâmica fria",
+                    true,
+                    1
+            ));
+
+            p2.addImage(new ProductImage(
+                    null,
+                    "/images/products/macas-encantadas-2.jpg",
+                    "Detalhe das maçãs decorativas artesanais",
+                    false,
+                    2
+            ));
+
+            p3.addImage(new ProductImage(
+                    null,
+                    "/images/products/chaveiro-farfalle-amarelo-1.jpg",
+                    "Chaveiro artesanal farfalle amarelo",
+                    true,
+                    1
+            ));
+
+            p3.addImage(new ProductImage(
+                    null,
+                    "/images/products/chaveiro-farfalle-amarelo-2.jpg",
+                    "Detalhe do chaveiro farfalle amarelo com argola metálica",
+                    false,
+                    2
+            ));
+
+            p4.addImage(new ProductImage(
+                    null,
+                    "/images/products/lacos-amarelos-decorativos-1.jpg",
+                    "Laços amarelos decorativos feitos em cerâmica fria",
+                    true,
+                    1
+            ));
+
+            p5.addImage(new ProductImage(
+                    null,
+                    "/images/products/porta-joias-organico-1.jpg",
+                    "Porta-joias artesanal com formato orgânico",
+                    true,
+                    1
+            ));
+
+            p5.addImage(new ProductImage(
+                    null,
+                    "/images/products/porta-joias-organico-2.jpg",
+                    "Detalhe do porta-joias artesanal em cerâmica fria",
+                    false,
+                    2
+            ));
+
+            p6.addImage(new ProductImage(
+                    null,
+                    "/images/products/mini-peca-decorativa-afeto-1.jpg",
+                    "Mini peça decorativa artesanal em cerâmica fria",
+                    true,
+                    1
+            ));
 
             p1.getCategories().add(incenseHolders);
             p1.getCategories().add(decorativePieces);
