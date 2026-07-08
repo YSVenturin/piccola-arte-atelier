@@ -1,6 +1,6 @@
 package com.yuri.piccolaarte.controllers;
 
-import com.yuri.piccolaarte.entities.Category;
+import com.yuri.piccolaarte.dtos.CategoryResponseDTO;
 import com.yuri.piccolaarte.services.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +21,14 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll() {
-        List<Category> categories = categoryService.findAll();
+    public ResponseEntity<List<CategoryResponseDTO>> findAll() {
+        List<CategoryResponseDTO> categories = categoryService.findAll();
         return ResponseEntity.ok().body(categories);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Category> findById(@PathVariable Long id) {
-        Category category = categoryService.findById(id);
+    public ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id) {
+        CategoryResponseDTO category = categoryService.findById(id);
         return ResponseEntity.ok().body(category);
     }
 }

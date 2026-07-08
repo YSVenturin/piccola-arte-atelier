@@ -1,11 +1,12 @@
 package com.yuri.piccolaarte.services;
 
+import com.yuri.piccolaarte.dtos.CategoryResponseDTO;
 import com.yuri.piccolaarte.entities.Category;
 import com.yuri.piccolaarte.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -16,12 +17,16 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<CategoryResponseDTO> findAll() {
+        return categoryRepository.findByActiveTrueOrderByDisplayOrderAsc().stream().map(CategoryResponseDTO::new).toList();
     }
 
-    public Category findById(Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
-        return category.get();
+    @Transactional(readOnly = true)
+    public CategoryResponseDTO findById(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        return new CategoryResponseDTO(category);
     }
 }
