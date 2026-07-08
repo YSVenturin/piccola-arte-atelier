@@ -26,9 +26,9 @@ public class ProductController {
         return ResponseEntity.ok().body(products);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Long id) {
-        Product product = productService.findById(id);
-        return ResponseEntity.ok().body(product);
+    @GetMapping("/{slug}")
+    public ResponseEntity<Product> findBySlug(@PathVariable String slug) {
+        Product product = productService.findBySlug(slug);
+        return ResponseEntity.ok(product);
     }
 }

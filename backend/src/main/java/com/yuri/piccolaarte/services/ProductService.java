@@ -20,8 +20,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findById(Long id) {
-        Optional<Product> product = productRepository.findById(id);
+    public Product findBySlug(String slug) {
+        Optional<Product> product = productRepository.findBySlug(slug);
         return product.get();
     }
 }
