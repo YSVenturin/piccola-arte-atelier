@@ -6,14 +6,18 @@ public record CategoryResponseDTO(
         Long id,
         String name,
         String slug,
-        String description
+        String description,
+        Boolean active,
+        Integer displayOrder
 ) {
     public CategoryResponseDTO(Category category) {
         this(
                 category.getId(),
                 category.getName(),
                 category.getSlug(),
-                category.getDescription()
+                category.getDescription(),
+                category.getActive(),
+                category.getDisplayOrder()
         );
     }
 }
