@@ -23,8 +23,8 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public CategoryResponseDTO findById(Long id) {
-        Category category = categoryRepository.findById(id)
+    public CategoryResponseDTO findBySlug(String slug) {
+        Category category = categoryRepository.findBySlug(slug)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         return new CategoryResponseDTO(category);

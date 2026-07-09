@@ -26,9 +26,9 @@ public class CategoryController {
         return ResponseEntity.ok().body(categories);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoryResponseDTO> findById(@PathVariable Long id) {
-        CategoryResponseDTO category = categoryService.findById(id);
+    @GetMapping(value = "/{slug}")
+    public ResponseEntity<CategoryResponseDTO> findBySlug(@PathVariable String slug) {
+        CategoryResponseDTO category = categoryService.findBySlug(slug);
         return ResponseEntity.ok().body(category);
     }
 }
