@@ -44,7 +44,7 @@ public class ProductImage implements Serializable {
     public void prePersist() {
         Instant now = Instant.now();
         createdAt = now;
-        updatedAt = Instant.now();
+        updatedAt = now;
     }
 
     @PreUpdate

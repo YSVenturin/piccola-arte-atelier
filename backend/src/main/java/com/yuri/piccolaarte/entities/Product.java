@@ -65,6 +65,7 @@ public class Product implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("displayOrder ASC")
     private List<ProductImage> productImages = new ArrayList<>();
 
     @PrePersist

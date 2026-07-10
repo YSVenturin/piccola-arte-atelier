@@ -1,5 +1,7 @@
 package com.yuri.piccolaarte.controllers;
 
+import com.yuri.piccolaarte.dtos.ProductDetailsDTO;
+import com.yuri.piccolaarte.dtos.ProductSummaryDTO;
 import com.yuri.piccolaarte.entities.Product;
 import com.yuri.piccolaarte.services.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +23,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> findAll() {
-        List<Product> products = productService.findAll();
+    public ResponseEntity<List<ProductSummaryDTO>> findAll() {
+        List<ProductSummaryDTO> products = productService.findAll();
         return ResponseEntity.ok().body(products);
     }
 
     @GetMapping("/{slug}")
-    public ResponseEntity<Product> findBySlug(@PathVariable String slug) {
-        Product product = productService.findBySlug(slug);
+    public ResponseEntity<ProductDetailsDTO> findBySlug(@PathVariable String slug) {
+        ProductDetailsDTO product = productService.findBySlug(slug);
         return ResponseEntity.ok(product);
     }
 }
