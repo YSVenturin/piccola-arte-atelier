@@ -1,8 +1,10 @@
 package com.yuri.piccolaarte.services;
 
+import com.yuri.piccolaarte.dtos.ProductImageResponseDTO;
 import com.yuri.piccolaarte.entities.ProductImage;
 import com.yuri.piccolaarte.repositories.ProductImageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,12 +18,18 @@ public class ProductImageService {
         this.productImageRepository = productImageRepository;
     }
 
-    public List<ProductImage> findAllByProductId(Long id) {
-        return productImageRepository.findByProductIdOrderByDisplayOrderAsc(id);
+    @Transactional(readOnly = true)
+    public List<ProductImageResponseDTO> findAllByProductId(Long id) {
+        return productImageRepository.findByProductIdOrderByDisplayOrderAsc(id).stream().map(ProductImageResponseDTO::new).toList();
     }
 
-    public ProductImage findByIdAndProductId(Long imageId, Long productId) {
+    @Transactional(readOnly = true)
+    public ProductImageResponseDTO findByIdAndProductId(Long imageId, Long productId) {
         Optional<ProductImage> productImage = productImageRepository.findByIdAndProductId(imageId, productId);
-        return productImage.get();
+        if (productImage.isEmpty()) {
+            throw new RuntimeException("Image not found");
+        }
+
+        return new ProductImageResponseDTO(productImage.get());
     }
 }

@@ -1,6 +1,6 @@
 package com.yuri.piccolaarte.controllers;
 
-import com.yuri.piccolaarte.entities.ProductImage;
+import com.yuri.piccolaarte.dtos.ProductImageResponseDTO;
 import com.yuri.piccolaarte.services.ProductImageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +21,14 @@ public class ProductImageController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductImage>> findAllByProductId(@PathVariable Long productId) {
-        List<ProductImage> productImages = productImageService.findAllByProductId(productId);
+    public ResponseEntity<List<ProductImageResponseDTO>> findAllByProductId(@PathVariable Long productId) {
+        List<ProductImageResponseDTO> productImages = productImageService.findAllByProductId(productId);
         return ResponseEntity.ok().body(productImages);
     }
 
     @GetMapping(value = "/{imageId}")
-    public ResponseEntity<ProductImage> findById(@PathVariable Long imageId, @PathVariable Long productId) {
-        ProductImage productImage = productImageService.findByIdAndProductId(imageId, productId);
+    public ResponseEntity<ProductImageResponseDTO> findById(@PathVariable Long imageId, @PathVariable Long productId) {
+        ProductImageResponseDTO productImage = productImageService.findByIdAndProductId(imageId, productId);
         return ResponseEntity.ok().body(productImage);
     }
 }
