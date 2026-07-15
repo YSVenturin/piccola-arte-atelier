@@ -1,97 +1,144 @@
 import axios from "axios";
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+
+import { PageContainer } from "../components/layout/PageContainer";
+import { EmptyState } from "../components/ui/EmptyState";
+import { ErrorMessage } from "../components/ui/ErrorMessage";
+import { LoadingSpinner } from "../components/ui/LoadingSpinner";
+import { ProductCard } from "../components/ui/ProductCard";
 import { getProducts } from "../services/productService";
 import type { ProductSummaryDTO } from "../types/product";
-import { PageContainer } from "../components/layout/PageContainer";
 
-import { ROUTES } from "../routes/routePaths";
+type LoadStatus = "loading" | "success" | "error";
 
-export function ProductListPage() {
-    const [products, setProducts] = useState<ProductSummaryDTO[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+function getProductsErrorMessage(requestError: unknown): string {
+  if (!axios.isAxiosError(requestError)) {
+    return "Ocorreu um erro inesperado. Tente novamente.";
+  }
 
-    async function handleLoadProducts() {
-        setLoading(true);
-        setError(null);
+  if (requestError.code === "ECONNABORTED") {
+    return "A conexão demorou mais que o esperado. Verifique sua internet e tente novamente.";
+  }
 
-        try {
-            const data = await getProducts();
-            setProducts(data);
-        }
-        catch (requestError) {
-            console.error("Failed to load the products: ", requestError);
+  if (!requestError.response) {
+    return "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.";
+  }
 
-            if (axios.isAxiosError(requestError)) {
-                if (!requestError.response) {
-                    setError("Could not connect to the backend.");
-                }
-                else {
-                    setError(`Backend response: ${requestError.response.status}.`,);
-                }
-            }
-            else {
-                setError("Unexpected error.");
-            }
-        }
-        finally {
-            setLoading(false);
-        }
-    }
+  if (requestError.response.status >= 500) {
+    return "O catálogo está temporariamente indisponível. Tente novamente em alguns instantes.";
+  }
 
-    return (
-        <section className="bg-brand-50 py-12 sm:py-16">
-            <PageContainer>
-                <div className="mx-auto max-w-5xl">
-                    <Link to={ROUTES.home} className="font-medium text-brand-900 hover:underline">
-                        Voltar para o inicio
-                    </Link>
-
-                    <div>
-                        <h1 className="text-3xl font-bold text-brand-900">
-                            Produtos
-                        </h1>
-
-                        <button type="button" onClick={handleLoadProducts} disabled={loading} className="mt-2 mb-2 rounded-full bg-brand-900 px-6 py-3 font-medium text-white hover:bg-brand-800">
-                            {loading ? "Carregando..." : "Carregar produtos"}
-                        </button>
-                    </div>
-
-                    {error && (
-                        <div role="alert">
-                            {error}
-                        </div>
-                    )}
-
-                    {!loading && !error && products.length > 0 && (
-                        <section>
-                            <p className="mb-4 text-sm text-brand-600">
-                                {products.length} produto(s) recebido(s).
-                            </p>
-
-                            <ul className="grid gap-4 grid-cols-3">
-                                {products.map((product) => (
-                                    <li key={product.id} className="rounded-xl border border-brand-200 bg-brand-50 p-5">
-                                        <h2>
-                                            {product.name}
-                                        </h2>
-
-                                        <p className="font-semibold text-brand-900">
-                                            {product.shortDescription}
-                                        </p>
-
-                                        <p>
-                                            Slug: {product.slug}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </section>
-                    )}
-                </div>
-            </PageContainer>
-        </section>
-    )
+  return "Não foi possível carregar os produtos. Tente novamente.";
 }
 
+export function ProductListPage() {
+  const [products, setProducts] = useState<ProductSummaryDTO[]>([]);
+  const [status, setStatus] = useState<LoadStatus>("loading");
+  const [error, setError] = useState<string | null>(null);
+  const [requestVersion, setRequestVersion] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadProducts() {
+      try {
+        const data = await getProducts(controller.signal);
+
+        if (controller.signal.aborted) {
+          return;
+        }
+
+        setProducts(data);
+        setError(null);
+        setStatus("success");
+      } catch (requestError) {
+        if (controller.signal.aborted) {
+          return;
+        }
+
+        console.error("Erro ao carregar produtos:", requestError);
+
+        setError(getProductsErrorMessage(requestError));
+
+        setStatus("error");
+      }
+    }
+
+    void loadProducts();
+
+    return () => {
+      controller.abort();
+    };
+  }, [requestVersion]);
+
+  function handleRetry() {
+    setError(null);
+    setStatus("loading");
+
+    setRequestVersion((currentVersion) => currentVersion + 1);
+  }
+
+  const productCountLabel =
+    products.length === 1
+      ? "1 peça encontrada"
+      : `${products.length} peças encontradas`;
+
+  return (
+    <section className="py-8 sm:py-12">
+      <PageContainer>
+        <header className="max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-600">
+            Catálogo
+          </p>
+
+          <h1 className="mt-3 font-display text-4xl font-semibold text-brand-900 sm:text-6xl">
+            Peças artesanais
+          </h1>
+
+          <p className="mt-4 leading-7 text-brand-700">
+            Conheça as criações da Piccola Arte, produzidas à mão com cuidado em
+            cada detalhe.
+          </p>
+        </header>
+
+        <div className="mt-10" aria-busy={status === "loading"}>
+          {status === "loading" && (
+            <LoadingSpinner />
+          )}
+
+          {status === "error" && error && (
+            <ErrorMessage message={error} onRetry={handleRetry} />
+          )}
+
+          {status === "success" && products.length === 0 && (
+            <EmptyState
+              title="Nenhuma peça encontrada"
+              description="Ainda não existem produtos disponíveis no catálogo."
+            />
+          )}
+
+          {status === "success" && products.length > 0 && (
+            <section aria-labelledby="catalog-results-title">
+              <div className="mb-5 flex items-center justify-between">
+                <h2
+                  id="catalog-results-title"
+                  className="text-sm font-medium text-brand-700"
+                >
+                  {productCountLabel}
+                </h2>
+              </div>
+
+              <ul className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-6 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+                {products.map((product) => (
+                  <li key={product.id} className="min-w-0">
+                    <ProductCard product={product} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
+      </PageContainer>
+    </section>
+  );
+}
