@@ -1,8 +1,15 @@
+import { Route, Routes } from "react-router";
+import { HomePage } from "./pages/HomePage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { ProductListPage } from "./pages/ProductListPage";
+
 function App() {
   return (
-    <main className="min-h-screen bg-stone-50">
-      <h1 className="sr-only">Piccola Arte Atelier</h1>
-    </main>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/produtos" element={<ProductListPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
