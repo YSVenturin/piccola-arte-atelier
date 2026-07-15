@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 import { PageContainer } from "../components/layout/PageContainer";
 
+import { ROUTES } from "../routes/routePaths";
+
 export function NotFoundPage() {
   return (
       <section className="text-center">
@@ -14,7 +16,7 @@ export function NotFoundPage() {
           </h1>
 
           <Link
-            to="/"
+            to={ROUTES.home}
             className="mt-6 font-medium text-amber-900 hover:underline"
           >
             Voltar para o início

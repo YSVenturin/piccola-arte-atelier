@@ -5,6 +5,8 @@ import { getProducts } from "../services/productService";
 import type { ProductSummaryDTO } from "../types/product";
 import { PageContainer } from "../components/layout/PageContainer";
 
+import { ROUTES } from "../routes/routePaths";
+
 export function ProductListPage() {
     const [products, setProducts] = useState<ProductSummaryDTO[]>([]);
     const [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ export function ProductListPage() {
         <section className="bg-brand-50 py-12 sm:py-16">
             <PageContainer>
                 <div className="mx-auto max-w-5xl">
-                    <Link to="/" className="font-medium text-brand-900 hover:underline">
+                    <Link to={ROUTES.home} className="font-medium text-brand-900 hover:underline">
                         Voltar para o inicio
                     </Link>
 

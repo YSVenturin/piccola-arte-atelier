@@ -2,6 +2,8 @@ import { Link } from "react-router";
 import brandMarkLight from "../assets/images/brand/brand-mark-light.png";
 import { PageContainer } from "../components/layout/PageContainer";
 
+import { ROUTES } from "../routes/routePaths";
+
 export function HomePage() {
     return (
         <section className="bg-brand-50 py-16 sm:py-24">
@@ -24,11 +26,11 @@ export function HomePage() {
                         Piccole creazioni, grande amore!
                     </p>
 
-                    <Link to="/produtos" className="rounded-full bg-brand-600 font-sans px-7 py-3.5 text-sm font-semibold text-brand-50 hover:bg-brand-700">
+                    <Link to={ROUTES.products} className="rounded-full bg-brand-600 font-sans px-7 py-3.5 text-sm font-semibold text-brand-50 hover:bg-brand-700">
                         Testar catalogo
                     </Link>
 
-                    <Link to="/sobre" className="mt-8">
+                    <Link to={ROUTES.about} className="mt-8">
                         Conhecer o atelier
                     </Link>
                 </div>

@@ -3,22 +3,24 @@ import { Link } from "react-router";
 import logoMarkDark from "../../assets/images/brand/brand-mark-dark.png";
 import { PageContainer } from "./PageContainer";
 
+import { ROUTES } from "../../routes/routePaths";
+
 const navigationItems = [
     {
         label: "Início",
-        to: "/",
+        to: ROUTES.home,
     },
     {
         label: "Produtos",
-        to: "/produtos",
+        to: ROUTES.products,
     },
     {
         label: "Sobre",
-        to: "/sobre",
+        to: ROUTES.about,
     },
     {
         label: "Contato",
-        to: "/contato",
+        to: ROUTES.contact,
     },
 ];
 
@@ -30,7 +32,7 @@ export function Footer() {
             <PageContainer className="py-5 sm:py-8">
                 <div className="grid gap-10 grid-cols-1 md:grid-cols-2 md:gap-16">
                     <div className="max-w-md">
-                        <Link to="/" className="inline-flex items-center gap-2">
+                        <Link to={ROUTES.home} className="inline-flex items-center gap-2">
                             <img
                                 src={logoMarkDark}
                                 alt=""

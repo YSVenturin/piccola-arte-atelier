@@ -6,22 +6,24 @@ import { Menu, X } from "lucide-react";
 import logoMarkLight from "../../assets/images/brand/brand-mark-light.png";
 import { PageContainer } from "./PageContainer";
 
+import { ROUTES } from "../../routes/routePaths";
+
 const navigationItems = [
     {
         label: "Início",
-        to: "/",
+        to: ROUTES.home,
     },
     {
         label: "Produtos",
-        to: "/produtos",
+        to: ROUTES.products,
     },
     {
         label: "Sobre",
-        to: "/sobre",
+        to: ROUTES.about,
     },
     {
         label: "Contato",
-        to: "/contato",
+        to: ROUTES.contact,
     },
 ];
 
@@ -32,7 +34,7 @@ export function Header() {
         <header className="sticky top-0 z-50 border-b border-brand-200/80 bg-brand-50/95 backdrop-blur">
             <PageContainer>
                 <div className="flex min-h-20 items-center justify-between gap-6">
-                    <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex shrink-0 items-center gap-3" aria-label="Ir para a página inicial">
+                    <Link to={ROUTES.home} onClick={() => setIsMenuOpen(false)} className="flex shrink-0 items-center gap-3" aria-label="Ir para a página inicial">
                         <div className="hover:rotate-10">
                             <img
                                 src={logoMarkLight}
