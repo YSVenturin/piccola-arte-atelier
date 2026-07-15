@@ -38,18 +38,18 @@ export function ProductListPage() {
     }
 
     return (
-        <main className="min-h-screen bg-stone-50 px-6 py-12">
+        <main className="min-h-screen bg-brand-50 px-6 py-12">
             <div className="mx-auto max-w-5xl">
-                <Link to="/" className="font-medium text-amber-900 hover:underline">
+                <Link to="/" className="font-medium text-brand-900 hover:underline">
                     Voltar para o inicio
                 </Link>
 
                 <div>
-                    <h1 className="text-3xl font-bold text-stone-900">
+                    <h1 className="text-3xl font-bold text-brand-900">
                         Produtos
                     </h1>
 
-                    <button type="button" onClick={handleLoadProducts} disabled={loading} className="mt-2 mb-2 rounded-full bg-amber-900 px-6 py-3 font-medium text-white hover:bg-amber-800">
+                    <button type="button" onClick={handleLoadProducts} disabled={loading} className="mt-2 mb-2 rounded-full bg-brand-900 px-6 py-3 font-medium text-white hover:bg-brand-800">
                         {loading ? "Carregando..." : "Carregar produtos"}
                     </button>
                 </div>
@@ -62,18 +62,18 @@ export function ProductListPage() {
 
                 {!loading && !error && products.length > 0 && (
                     <section>
-                        <p className="mb-4 text-sm text-stone-600">
+                        <p className="mb-4 text-sm text-brand-600">
                             {products.length} produto(s) recebido(s).
                         </p>
 
                         <ul className="grid gap-4 grid-cols-3">
                             {products.map((product) => (
-                                <li key={product.id} className="rounded-xl border border-stone-200 bg-white p-5">
+                                <li key={product.id} className="rounded-xl border border-brand-200 bg-brand-50 p-5">
                                     <h2>
                                         {product.name}
                                     </h2>
 
-                                    <p className="font-semibold text-stone-900">
+                                    <p className="font-semibold text-brand-900">
                                         {product.shortDescription}
                                     </p>
 

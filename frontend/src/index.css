@@ -1,1 +1,65 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans:
+    "Manrope Variable",
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+
+  --font-display:
+    "Cormorant Garamond Variable",
+    Georgia,
+    serif;
+
+  --color-brand-50: #fff9ef;   /* cream - main background color */
+  --color-brand-100: #f8efe3;
+  --color-brand-200: #eadcc9;
+  --color-brand-300: #dfd0bd;  /* bege */
+  --color-brand-400: #c8ae91;
+  --color-brand-500: #a98261;
+  --color-brand-600: #805e43;
+  --color-brand-700: #654831;
+  --color-brand-800: #4d3524;
+  --color-brand-900: #3b2a1a;  /* brown */
+  --color-brand-950: #24170e;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--color-brand-50);
+    color: var(--color-brand-900);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-300);
+    color: var(--color-brand-950);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand-500);
+    outline-offset: 3px;
+  }
+}
