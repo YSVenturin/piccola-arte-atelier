@@ -1,11 +1,16 @@
 import { CircleAlert, RefreshCw } from "lucide-react";
 
 interface ErrorMessageProps {
+  title?: string;
   message: string;
   onRetry?: () => void;
 }
 
-export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
+export function ErrorMessage({
+  title = "Não foi possível carregar o conteúdo",
+  message,
+  onRetry,
+}: ErrorMessageProps) {
   return (
     <div
       role="alert"
@@ -14,7 +19,7 @@ export function ErrorMessage({ message, onRetry }: ErrorMessageProps) {
       <CircleAlert className="size-9 text-red-700" aria-hidden="true" />
 
       <h2 className="mt-4 font-display text-2xl font-semibold text-red-950">
-        Não foi possível carregar o catálogo
+        {title}
       </h2>
 
       <p className="mt-2 max-w-md text-sm leading-6 text-red-800">{message}</p>

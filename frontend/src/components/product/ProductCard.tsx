@@ -6,42 +6,10 @@ import { getProductDetailsPath } from "../../routes/routePaths";
 import type { ProductSummaryDTO } from "../../types/product";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { resolveImageUrl } from "../../utils/resolveImageUrl";
+import { ProductAvailabilityBadge } from "./ProductAvailabilityBadge";
 
 interface ProductCardProps {
   product: ProductSummaryDTO;
-}
-
-interface AvailabilityStatus {
-  label: string;
-  className: string;
-}
-
-function getAvailabilityStatus(product: ProductSummaryDTO): AvailabilityStatus {
-  if (!product.active) {
-    return {
-      label: "Indisponível",
-      className: "bg-stone-100 text-stone-700 ring-stone-200",
-    };
-  }
-
-  if (product.madeToOrder) {
-    return {
-      label: "Sob encomenda",
-      className: "bg-brand-100/75 text-brand-950 ring-brand-300",
-    };
-  }
-
-  if (product.available) {
-    return {
-      label: "Disponível",
-      className: "bg-emerald-50/85 text-emerald-800 ring-emerald-200",
-    };
-  }
-
-  return {
-    label: "Indisponível",
-    className: "bg-stone-100 text-stone-700 ring-stone-200",
-  };
 }
 
 export function ProductCard({ product }: ProductCardProps) {
@@ -49,7 +17,6 @@ export function ProductCard({ product }: ProductCardProps) {
   const imageUrl = resolveImageUrl(product.mainImage?.url);
   const shouldDisplayImage = imageUrl !== null && !hasImageError;
   const imageAlt = product.mainImage?.altText?.trim() || product.name;
-  const availabilityStatus = getAvailabilityStatus(product);
   const formattedPrice =
     product.priceVisible && product.price !== null
       ? formatCurrency(product.price)
@@ -81,12 +48,11 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
 
           <div className="pointer-events-none absolute inset-x-2 top-2 flex items-start justify-between gap-2 sm:inset-x-3 sm:top-3">
-
-            <span
-              className={`ml-auto inline-flex rounded-full px-2.5 py-1 text-[0.6rem] font-semibold ring-1 ring-inset shadow-sm sm:text-xs ${availabilityStatus.className}`}
-            >
-              {availabilityStatus.label}
-            </span>
+            <ProductAvailabilityBadge
+              product={product}
+              size="sm"
+              className="ml-auto shadow-sm"
+            />
           </div>
         </div>
 

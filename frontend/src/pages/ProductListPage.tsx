@@ -5,7 +5,7 @@ import { PageContainer } from "../components/layout/PageContainer";
 import { EmptyState } from "../components/ui/EmptyState";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner";
-import { ProductCard } from "../components/ui/ProductCard";
+import { ProductCard } from "../components/product/ProductCard";
 import { getProducts } from "../services/productService";
 import type { ProductSummaryDTO } from "../types/product";
 
@@ -107,7 +107,7 @@ export function ProductListPage() {
           )}
 
           {status === "error" && error && (
-            <ErrorMessage message={error} onRetry={handleRetry} />
+            <ErrorMessage title="Não foi possível carregar o catálogo" message={error} onRetry={handleRetry} />
           )}
 
           {status === "success" && products.length === 0 && (
