@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -20,8 +21,18 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductSummaryDTO> findAll() {
-        return productRepository.findByActiveTrue().stream().map(ProductSummaryDTO::new).toList();
+    public List<ProductSummaryDTO> findAll(String categorySlug) {
+        List<Product> products;
+
+        if (categorySlug == null || categorySlug.isBlank()) {
+            products = productRepository.findByActiveTrueOrderByCreatedAtDesc();
+        }
+        else {
+            String normalizedCategorySlug = categorySlug.trim().toLowerCase(Locale.ROOT);
+            products = productRepository.findActiveByCategorySlug(normalizedCategorySlug);
+        }
+
+        return products.stream().map(ProductSummaryDTO::new).toList();
     }
 
     @Transactional(readOnly = true)

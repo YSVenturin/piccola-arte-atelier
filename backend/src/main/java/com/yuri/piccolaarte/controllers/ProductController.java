@@ -5,10 +5,7 @@ import com.yuri.piccolaarte.dtos.ProductSummaryDTO;
 import com.yuri.piccolaarte.entities.Product;
 import com.yuri.piccolaarte.services.ProductService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +20,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductSummaryDTO>> findAll() {
-        List<ProductSummaryDTO> products = productService.findAll();
+    public ResponseEntity<List<ProductSummaryDTO>> findAll(@RequestParam(required = false) String category) {
+        List<ProductSummaryDTO> products = productService.findAll(category);
         return ResponseEntity.ok().body(products);
     }
 
