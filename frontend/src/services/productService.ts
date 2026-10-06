@@ -2,9 +2,13 @@ import type { ProductDetailsDTO, ProductSummaryDTO } from "../types/product";
 import { api } from "./api";
 
 export async function getProducts(
+  categorySlug?: string,
   signal?: AbortSignal,
 ): Promise<ProductSummaryDTO[]> {
   const response = await api.get<ProductSummaryDTO[]>("/products", {
+    params: {
+      category: categorySlug || undefined,
+    },
     signal,
   });
 

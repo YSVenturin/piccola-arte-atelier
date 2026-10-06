@@ -9,6 +9,12 @@ import { ProductCard } from "../components/product/ProductCard";
 import { getProducts } from "../services/productService";
 import type { ProductSummaryDTO } from "../types/product";
 
+import { useSearchParams } from "react-router";
+
+import { getCategories } from "../services/categoryService";
+import type { CategoryResponseDTO } from "../types/category";
+import { CategoryFilter } from "../components/product/CategoryFilter";
+
 type LoadStatus = "loading" | "success" | "error";
 
 function getProductsErrorMessage(requestError: unknown): string {
@@ -35,21 +41,35 @@ export function ProductListPage() {
   const [products, setProducts] = useState<ProductSummaryDTO[]>([]);
   const [status, setStatus] = useState<LoadStatus>("loading");
   const [error, setError] = useState<string | null>(null);
+
   const [requestVersion, setRequestVersion] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categorySlug = searchParams.get("categoria")?.trim() || undefined;
+
+  const [categories, setCategories] = useState<CategoryResponseDTO[]>([]);
+
+  const [categoriesStatus, setCategoriesStatus] = useState<LoadStatus>("loading");
+
+  const [categoriesRequestVersion, setCategoriesRequestVersion] = useState(0);
 
   useEffect(() => {
     const controller = new AbortController();
 
     async function loadProducts() {
+      setStatus("loading");
+      setError(null);
+
       try {
-        const data = await getProducts(controller.signal);
+        const data = await getProducts(
+          categorySlug,
+          controller.signal,
+        );
 
         if (controller.signal.aborted) {
           return;
         }
 
         setProducts(data);
-        setError(null);
         setStatus("success");
       } catch (requestError) {
         if (controller.signal.aborted) {
@@ -59,7 +79,6 @@ export function ProductListPage() {
         console.error("Erro ao carregar produtos:", requestError);
 
         setError(getProductsErrorMessage(requestError));
-
         setStatus("error");
       }
     }
@@ -69,7 +88,45 @@ export function ProductListPage() {
     return () => {
       controller.abort();
     };
-  }, [requestVersion]);
+  }, [categorySlug, requestVersion]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadCategories() {
+      setCategoriesStatus("loading");
+
+      try {
+        const data = await getCategories(controller.signal);
+
+        if (controller.signal.aborted) return;
+
+        setCategories(data);
+        setCategoriesStatus("success");
+      } catch (requestError) {
+        if (controller.signal.aborted) return;
+
+        console.error("Erro ao carregar categorias:", requestError);
+        setCategoriesStatus("error");
+      }
+    }
+
+    void loadCategories();
+
+    return () => controller.abort();
+  }, [categoriesRequestVersion]);
+
+  function handleCategoryChange(nextCategorySlug: string) {
+    const params = new URLSearchParams(searchParams);
+
+    if (nextCategorySlug) {
+      params.set("categoria", nextCategorySlug);
+    } else {
+      params.delete("categoria");
+    }
+
+    setSearchParams(params);
+  }
 
   function handleRetry() {
     setError(null);
@@ -101,6 +158,16 @@ export function ProductListPage() {
           </p>
         </header>
 
+        <CategoryFilter
+          categories={categories}
+          selectedSlug={categorySlug}
+          status={categoriesStatus}
+          onChange={handleCategoryChange}
+          onRetry={() =>
+            setCategoriesRequestVersion((current) => current + 1)
+          }
+        />
+
         <div className="mt-10" aria-busy={status === "loading"}>
           {status === "loading" && (
             <LoadingSpinner />
@@ -113,7 +180,11 @@ export function ProductListPage() {
           {status === "success" && products.length === 0 && (
             <EmptyState
               title="Nenhuma peça encontrada"
-              description="Ainda não existem produtos disponíveis no catálogo."
+              description={
+                categorySlug
+                  ? "Nenhuma peça encontrada nesta categoria."
+                  : "Ainda não existem produtos disponíveis no catálogo."
+              }
             />
           )}
 
