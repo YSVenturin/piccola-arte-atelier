@@ -25,14 +25,18 @@ public record ProductSummaryDTO(
                 product.getName(),
                 product.getSlug(),
                 product.getShortDescription(),
-                product.getPrice(),
+                // if priceVisible is true, returns price, if not, returns null
+                Boolean.TRUE.equals(product.getPriceVisible()) ? product.getPrice() : null,
                 product.getPriceVisible(),
                 product.getFeatured(),
                 product.getActive(),
                 product.getAvailable(),
                 product.getMadeToOrder(),
                 getMainImage(product),
-                product.getCategories().stream().map(CategoryResponseDTO::new).toList()
+                product.getCategories().stream()
+                        .filter(category -> Boolean.TRUE.equals(category.getActive()))
+                        .map(CategoryResponseDTO::new)
+                        .toList()
         );
     }
 

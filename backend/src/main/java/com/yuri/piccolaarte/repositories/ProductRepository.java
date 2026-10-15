@@ -32,5 +32,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("categorySlug") String categorySlug
     );
 
-    Optional<Product> findBySlug(String slug);
+    Optional<Product> findBySlugAndActiveTrue(String slug);
 }

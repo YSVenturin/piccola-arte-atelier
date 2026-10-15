@@ -38,7 +38,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDetailsDTO findBySlug(String slug) {
-        Product product = productRepository.findBySlug(slug)
+        Product product = productRepository.findBySlugAndActiveTrue(slug)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found."));
         return new ProductDetailsDTO(product);
     }

@@ -32,7 +32,8 @@ public record ProductDetailsDTO(
                 product.getSlug(),
                 product.getShortDescription(),
                 product.getDescription(),
-                product.getPrice(),
+                // if priceVisible is true, returns price, if not, returns null
+                Boolean.TRUE.equals(product.getPriceVisible()) ? product.getPrice() : null,
                 product.getPriceVisible(),
                 product.getFeatured(),
                 product.getMaterial(),
@@ -40,8 +41,8 @@ public record ProductDetailsDTO(
                 product.getActive(),
                 product.getAvailable(),
                 product.getMadeToOrder(),
-                product.getCategories()
-                        .stream()
+                product.getCategories().stream()
+                        .filter(category -> Boolean.TRUE.equals(category.getActive()))
                         .map(CategoryResponseDTO::new)
                         .toList(),
                 product.getProductImages()

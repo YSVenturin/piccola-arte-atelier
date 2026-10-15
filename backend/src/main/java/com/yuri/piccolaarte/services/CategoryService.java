@@ -25,7 +25,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public CategoryResponseDTO findBySlug(String slug) {
-        Category category = categoryRepository.findBySlug(slug)
+        Category category = categoryRepository.findBySlugAndActiveTrue(slug)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
         return new CategoryResponseDTO(category);
