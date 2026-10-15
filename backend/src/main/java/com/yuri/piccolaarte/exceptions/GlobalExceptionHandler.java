@@ -65,6 +65,18 @@ public class GlobalExceptionHandler {
         return p;
     }
 
+    @ExceptionHandler(InvalidRequestException.class)
+    public ProblemDetail handleInvalidRequest(InvalidRequestException exception) {
+        ProblemDetail p = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage()
+        );
+
+        p.setTitle("Invalid request");
+
+        return p;
+    }
+
     public record FieldValidationError(
             String field,
             String message

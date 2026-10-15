@@ -33,4 +33,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     );
 
     Optional<Product> findBySlugAndActiveTrue(String slug);
+
+    boolean existsBySlug(String slug);
+
+    boolean existsBySlugAndIdNot(String slug, Long id);
 }
