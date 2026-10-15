@@ -2,6 +2,7 @@ package com.yuri.piccolaarte.services;
 
 import com.yuri.piccolaarte.dtos.CategoryResponseDTO;
 import com.yuri.piccolaarte.entities.Category;
+import com.yuri.piccolaarte.exceptions.ResourceNotFoundException;
 import com.yuri.piccolaarte.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryResponseDTO findBySlug(String slug) {
         Category category = categoryRepository.findBySlug(slug)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found."));
 
         return new CategoryResponseDTO(category);
     }

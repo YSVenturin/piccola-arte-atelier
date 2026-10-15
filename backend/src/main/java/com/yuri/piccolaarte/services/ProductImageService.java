@@ -2,7 +2,9 @@ package com.yuri.piccolaarte.services;
 
 import com.yuri.piccolaarte.dtos.ProductImageResponseDTO;
 import com.yuri.piccolaarte.entities.ProductImage;
+import com.yuri.piccolaarte.exceptions.ResourceNotFoundException;
 import com.yuri.piccolaarte.repositories.ProductImageRepository;
+import com.yuri.piccolaarte.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,23 +15,29 @@ import java.util.Optional;
 public class ProductImageService {
 
     private final ProductImageRepository productImageRepository;
+    private final ProductRepository productRepository;
 
-    public ProductImageService(ProductImageRepository productImageRepository) {
+    public ProductImageService(ProductImageRepository productImageRepository, ProductRepository productRepository) {
         this.productImageRepository = productImageRepository;
+        this.productRepository = productRepository;
     }
 
     @Transactional(readOnly = true)
     public List<ProductImageResponseDTO> findAllByProductId(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Product not found.");
+        }
         return productImageRepository.findByProductIdOrderByDisplayOrderAsc(id).stream().map(ProductImageResponseDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
     public ProductImageResponseDTO findByIdAndProductId(Long imageId, Long productId) {
-        Optional<ProductImage> productImage = productImageRepository.findByIdAndProductId(imageId, productId);
-        if (productImage.isEmpty()) {
-            throw new RuntimeException("Image not found");
-        }
+        ProductImage image = productImageRepository
+                .findByIdAndProductId(imageId, productId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Image not found for this product.")
+                );
 
-        return new ProductImageResponseDTO(productImage.get());
+        return new ProductImageResponseDTO(image);
     }
 }

@@ -3,6 +3,7 @@ package com.yuri.piccolaarte.services;
 import com.yuri.piccolaarte.dtos.ProductDetailsDTO;
 import com.yuri.piccolaarte.dtos.ProductSummaryDTO;
 import com.yuri.piccolaarte.entities.Product;
+import com.yuri.piccolaarte.exceptions.ResourceNotFoundException;
 import com.yuri.piccolaarte.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +39,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductDetailsDTO findBySlug(String slug) {
         Product product = productRepository.findBySlug(slug)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found."));
         return new ProductDetailsDTO(product);
     }
 }
