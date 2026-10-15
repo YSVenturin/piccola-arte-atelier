@@ -80,7 +80,10 @@ public class AdminProductService {
 
     @Transactional
     public void delete(Long id) {
-        Product product = findProduct(id);
+        Product product = productRepository.findByIdForUpdate(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Product not found.")
+                );
 
         productRepository.delete(product);
         productRepository.flush();

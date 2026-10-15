@@ -10,8 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Long> {
 
-    List<ProductImage> findByProductIdOrderByDisplayOrderAsc(Long productId);
+    List<ProductImage> findByProductIdOrderByDisplayOrderAscIdAsc(Long productId);
 
     Optional<ProductImage> findByIdAndProductId(Long id, Long productId);
-
 }
