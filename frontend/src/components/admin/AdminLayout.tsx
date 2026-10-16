@@ -35,25 +35,25 @@ export function AdminLayout() {
           aria-label="Menu administrativo"
           className="mt-6 flex flex-wrap gap-2 lg:flex-col"
         >
-          <NavLink
-            to="/admin"
-            end
-            className="rounded-xl bg-brand-900 px-4 py-3 text-sm font-semibold text-brand-50"
-          >
-            Visão geral
-          </NavLink>
-
-          {["Produtos", "Categorias"].map((label) => (
-            <span
-              key={label}
-              className="flex items-center justify-between gap-3 px-4 py-3 text-sm text-brand-600"
+          {[
+            { to: "/admin", label: "Visão geral" },
+            { to: "/admin/categorias", label: "Categorias" },
+            { to: "/admin/produtos", label: "Produtos" },
+          ].map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end
+              className={({ isActive }) =>
+                `rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                  isActive
+                    ? "bg-brand-900 text-brand-50"
+                    : "text-brand-800 hover:bg-brand-200"
+                }`
+              }
             >
               {label}
-
-              <span className="rounded-full border border-brand-300 px-2 py-0.5 text-[10px]">
-                Em breve
-              </span>
-            </span>
+            </NavLink>
           ))}
         </nav>
       </aside>

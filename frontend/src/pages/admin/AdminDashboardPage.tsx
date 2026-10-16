@@ -1,5 +1,7 @@
 import { Image, Package, Tags } from "lucide-react";
 
+import { Link } from "react-router";
+
 const sections = [
   {
     title: "Produtos",
@@ -33,9 +35,8 @@ export function AdminDashboardPage() {
       </h1>
 
       <p className="mt-4 max-w-2xl leading-7 text-brand-700">
-        Este é o espaço de administração da Piccola Arte.
-        O acesso já está pronto; as ferramentas de edição
-        serão adicionadas nas próximas etapas.
+        Cuide da organização do catálogo e mantenha as informações
+        do atelier atualizadas.
       </p>
 
       <div className="mt-8 grid gap-5 md:grid-cols-3">
@@ -57,9 +58,24 @@ export function AdminDashboardPage() {
               {description}
             </p>
 
-            <p className="mt-5 text-xs font-semibold text-brand-600">
-              Disponível em breve
-            </p>
+            {title === "Categorias" || title === "Produtos" ? (
+              <Link
+                to={
+                  title === "Categorias"
+                    ? "/admin/categorias"
+                    : "/admin/produtos"
+                }
+                className="admin-secondary mt-5"
+              >
+                {title === "Categorias"
+                  ? "Gerenciar categorias"
+                  : "Gerenciar produtos"}
+              </Link>
+            ) : (
+              <p className="mt-5 text-xs font-semibold text-brand-600">
+                Disponível em breve
+              </p>
+            )}
           </section>
         ))}
       </div>

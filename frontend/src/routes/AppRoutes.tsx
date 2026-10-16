@@ -13,6 +13,8 @@ import { ProductDetailsPage } from "../pages/ProductDetailsPage";
 import { ProductListPage } from "../pages/ProductListPage";
 import { AdminDashboardPage } from "../pages/admin/AdminDashboardPage";
 import { AdminLoginPage } from "../pages/admin/AdminLoginPage";
+import { AdminCategoriesPage } from "../pages/admin/AdminCategoriesPage";
+import { AdminProductsPage } from "../pages/admin/AdminProductsPage";
 
 import { ROUTE_SEGMENTS } from "./routePaths";
 
@@ -37,6 +39,16 @@ export function AppRoutes() {
             <Route
               index
               element={<AdminDashboardPage />}
+            />
+
+            <Route
+              path="categorias"
+              element={<AdminCategoriesPage />}
+            />
+
+            <Route
+              path="produtos"
+              element={<AdminProductsPage />}
             />
 
             <Route

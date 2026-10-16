@@ -6,3 +6,11 @@ export interface CategoryResponseDTO {
   active: boolean;
   displayOrder: number | null;
 }
+
+export interface CategoryRequestDTO {
+  name: string;
+  slug: string;
+  description: string | null;
+  active: boolean;
+  displayOrder: number;
+}
