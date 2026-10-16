@@ -1,0 +1,93 @@
+import { Link, NavLink, Outlet } from "react-router";
+
+import logoMark from "../../assets/images/brand/logo-mark.webp";
+import { useAuth } from "../../auth/AuthContext";
+import { LogoutButton } from "./LogoutButton";
+
+export function AdminLayout() {
+  const { user } = useAuth();
+
+  return (
+    <div className="min-h-dvh lg:grid lg:grid-cols-[250px_1fr]">
+      <aside className="border-b border-brand-200 bg-brand-100 p-6 lg:border-r lg:border-b-0">
+        <Link
+          to="/admin"
+          className="flex items-center gap-3"
+        >
+          <img
+            src={logoMark}
+            alt=""
+            className="size-12 object-contain"
+          />
+
+          <span>
+            <span className="block font-display text-2xl font-semibold">
+              Piccola Arte
+            </span>
+
+            <span className="text-xs text-brand-600">
+              Administração do atelier
+            </span>
+          </span>
+        </Link>
+
+        <nav
+          aria-label="Menu administrativo"
+          className="mt-6 flex flex-wrap gap-2 lg:flex-col"
+        >
+          <NavLink
+            to="/admin"
+            end
+            className="rounded-xl bg-brand-900 px-4 py-3 text-sm font-semibold text-brand-50"
+          >
+            Visão geral
+          </NavLink>
+
+          {["Produtos", "Categorias"].map((label) => (
+            <span
+              key={label}
+              className="flex items-center justify-between gap-3 px-4 py-3 text-sm text-brand-600"
+            >
+              {label}
+
+              <span className="rounded-full border border-brand-300 px-2 py-0.5 text-[10px]">
+                Em breve
+              </span>
+            </span>
+          ))}
+        </nav>
+      </aside>
+
+      <div className="min-w-0">
+        <header className="flex flex-wrap items-center justify-between gap-5 border-b border-brand-200 px-6 py-5 lg:px-10">
+          <div className="min-w-0">
+            <p className="text-xs text-brand-600">
+              Conectado como
+            </p>
+
+            <p className="break-all text-sm font-semibold">
+              {user?.email}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              to="/produtos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm underline underline-offset-4"
+            >
+              Ver catálogo ↗
+            </Link>
+
+            <LogoutButton />
+          </div>
+        </header>
+
+        <main className="mx-auto max-w-6xl px-6 py-8 lg:px-10 lg:py-12">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+}
