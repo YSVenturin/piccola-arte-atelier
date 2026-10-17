@@ -1,4 +1,4 @@
-import { Image, Package, Tags } from "lucide-react";
+import { Package, Tags } from "lucide-react";
 
 import { Link } from "react-router";
 
@@ -14,12 +14,6 @@ const sections = [
     icon: Tags,
     description:
       "Organize as peças para facilitar a navegação de quem visita o atelier.",
-  },
-  {
-    title: "Imagens",
-    icon: Image,
-    description:
-      "Escolha a foto principal e organize a galeria de cada produto.",
   },
 ];
 
@@ -39,7 +33,7 @@ export function AdminDashboardPage() {
         do atelier atualizadas.
       </p>
 
-      <div className="mt-8 grid gap-5 md:grid-cols-3">
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
         {sections.map(({ title, icon: Icon, description }) => (
           <section
             key={title}

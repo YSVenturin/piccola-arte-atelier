@@ -146,3 +146,15 @@ export function getProductErrorMessage(error: unknown): string {
 
   return "O servidor não conseguiu concluir a operação. Tente novamente mais tarde.";
 }
+
+export async function getAdminProduct(
+  id: number,
+  signal?: AbortSignal,
+) {
+  const { data } = await api.get<AdminProductResponseDTO>(
+    `${endpoint}/${id}`,
+    { signal },
+  );
+
+  return data;
+}

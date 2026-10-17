@@ -76,6 +76,7 @@ interface ProductFormProps {
   categories: CategoryResponseDTO[];
   onSave: (payload: ProductRequestDTO) => Promise<void>;
   onClose: () => void;
+  embedded?: boolean;
 }
 
 export function ProductForm({
@@ -83,6 +84,7 @@ export function ProductForm({
   categories,
   onSave,
   onClose,
+  embedded = false,
 }: ProductFormProps) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
@@ -137,13 +139,8 @@ export function ProductForm({
     }
   }
 
-  return (
-    <AdminDialog
-      title={product ? "Editar produto" : "Novo produto"}
-      busy={pending}
-      onClose={onClose}
-    >
-      <form onSubmit={handleSubmit}>
+  const form = (
+    <form onSubmit={handleSubmit}>
         <fieldset
           disabled={pending}
           className="space-y-6"
@@ -331,15 +328,25 @@ export function ProductForm({
               Cancelar
             </button>
 
-            <button
-              type="submit"
-              className="admin-primary"
-            >
-              {pending ? "Salvando..." : "Salvar produto"}
+            <button type="submit" className="admin-primary">
+              {pending
+                ? "Salvando..."
+                : product
+                  ? "Salvar informações"
+                  : "Salvar e adicionar fotos"}
             </button>
           </div>
         </fieldset>
       </form>
+  );
+
+  return embedded ? form : (
+    <AdminDialog
+      title={product ? "Editar produto" : "Novo produto"}
+      busy={pending}
+      onClose={onClose}
+    >
+      {form}
     </AdminDialog>
   );
 }

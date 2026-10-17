@@ -43,7 +43,7 @@ export function AdminLayout() {
             <NavLink
               key={to}
               to={to}
-              end
+              end={to === "/admin"}
               className={({ isActive }) =>
                 `rounded-xl px-4 py-3 text-sm font-semibold transition ${
                   isActive

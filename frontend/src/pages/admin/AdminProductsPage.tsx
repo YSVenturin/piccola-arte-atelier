@@ -1,24 +1,14 @@
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router";
 import { AdminDialog } from "../../components/admin/AdminDialog";
-import { ProductForm } from "../../components/admin/ProductForm";
 import { ErrorMessage } from "../../components/ui/ErrorMessage";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
-
-import { getAdminCategories } from "../../services/adminCategoryService";
 import {
-  createProduct,
   deleteProduct,
   getAdminProducts,
   getProductErrorMessage,
-  updateProduct,
 } from "../../services/adminProductService";
-
-import type {
-  AdminProductResponseDTO,
-  ProductRequestDTO,
-} from "../../types/adminProduct";
-import type { CategoryResponseDTO } from "../../types/category";
+import type { AdminProductResponseDTO } from "../../types/adminProduct";
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -26,22 +16,11 @@ const currency = new Intl.NumberFormat("pt-BR", {
 });
 
 export function AdminProductsPage() {
-  const [products, setProducts] = useState<
-    AdminProductResponseDTO[]
-  >([]);
-
-  const [categories, setCategories] = useState<
-    CategoryResponseDTO[]
-  >([]);
-
+  const [products, setProducts] = useState<AdminProductResponseDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [attempt, setAttempt] = useState(0);
   const [notice, setNotice] = useState("");
-
-  const [editor, setEditor] = useState<{
-    product?: AdminProductResponseDTO;
-  } | null>(null);
 
   const [deleteTarget, setDeleteTarget] =
     useState<AdminProductResponseDTO | null>(null);
@@ -54,14 +33,10 @@ export function AdminProductsPage() {
 
     async function load() {
       try {
-        const [productData, categoryData] = await Promise.all([
-          getAdminProducts(controller.signal),
-          getAdminCategories(controller.signal),
-        ]);
+        const productData = await getAdminProducts(controller.signal);
 
         if (!controller.signal.aborted) {
           setProducts(productData);
-          setCategories(categoryData);
         }
       } catch (cause) {
         if (!controller.signal.aborted) {
@@ -78,27 +53,6 @@ export function AdminProductsPage() {
 
     return () => controller.abort();
   }, [attempt]);
-
-  async function handleSave(payload: ProductRequestDTO) {
-    const product = editor?.product;
-
-    const saved = product
-      ? await updateProduct(product.id, payload)
-      : await createProduct(payload);
-
-    setProducts((current) => [
-      ...current.filter((item) => item.id !== saved.id),
-      saved,
-    ]);
-
-    setEditor(null);
-
-    setNotice(
-      product
-        ? "Produto atualizado com sucesso."
-        : "Produto criado com sucesso.",
-    );
-  }
 
   async function handleDelete() {
     if (!deleteTarget || deleting) return;
@@ -141,21 +95,16 @@ export function AdminProductsPage() {
           </h1>
 
           <p className="mt-3 text-sm leading-6 text-brand-700">
-            Organize informações, preços, disponibilidade
-            e categorias.
+            Organize informações, preços, disponibilidade e categorias.
           </p>
         </div>
 
-        <button
+        <Link
           className="admin-primary"
-          disabled={loading || Boolean(loadError)}
-          onClick={() => {
-            setNotice("");
-            setEditor({});
-          }}
+          to="/admin/produtos/novo"
         >
           + Novo produto
-        </button>
+        </Link>
       </div>
 
       <p
@@ -185,14 +134,15 @@ export function AdminProductsPage() {
       ) : (
         <>
           <p className="mt-8 text-sm text-brand-600">
-            Total: {products.length} · Ativos:{" "}
-            {products.filter((item) => item.active).length}
+            Total: {products.length}
+            {" · "}
+            Ativos: {products.filter((item) => item.active).length}
           </p>
 
           {products.length === 0 ? (
             <p className="mt-5 rounded-2xl border border-dashed border-brand-300 p-10 text-center text-brand-700">
-              Nenhum produto cadastrado. Clique em
-              “Novo produto” para começar.
+              Nenhum produto cadastrado. Clique em “Novo produto”
+              para começar.
             </p>
           ) : (
             <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -239,6 +189,7 @@ export function AdminProductsPage() {
                     {product.available
                       ? "Disponível"
                       : "Indisponível"}
+
                     {product.madeToOrder
                       ? " · Aceita encomendas"
                       : ""}
@@ -262,18 +213,16 @@ export function AdminProductsPage() {
                   </p>
 
                   <div className="mt-auto flex flex-wrap gap-3 pt-6">
-                    <button
+                    <Link
                       className="admin-secondary"
                       aria-label={`Editar produto ${product.name}`}
-                      onClick={() => {
-                        setNotice("");
-                        setEditor({ product });
-                      }}
+                      to={`/admin/produtos/${product.id}`}
                     >
                       Editar
-                    </button>
+                    </Link>
 
                     <button
+                      type="button"
                       className="rounded-xl px-4 py-2 text-sm font-semibold text-red-800 hover:bg-red-50"
                       aria-label={`Excluir produto ${product.name}`}
                       onClick={() => {
@@ -292,16 +241,6 @@ export function AdminProductsPage() {
         </>
       )}
 
-      {editor && (
-        <ProductForm
-          key={editor.product?.id ?? "new"}
-          product={editor.product}
-          categories={categories}
-          onSave={handleSave}
-          onClose={() => setEditor(null)}
-        />
-      )}
-
       {deleteTarget && (
         <AdminDialog
           title="Excluir produto?"
@@ -309,9 +248,8 @@ export function AdminProductsPage() {
           onClose={() => setDeleteTarget(null)}
         >
           <p className="break-words text-sm leading-7">
-            O produto <strong>{deleteTarget.name}</strong>{" "}
-            e os registros de suas imagens serão excluídos.
-            Essa ação não pode ser desfeita.
+            O produto <strong>{deleteTarget.name}</strong> e suas
+            imagens serão excluídos. Essa ação não pode ser desfeita.
           </p>
 
           <p className="mt-3 text-sm text-brand-700">
@@ -330,6 +268,7 @@ export function AdminProductsPage() {
 
           <div className="mt-6 flex flex-wrap justify-end gap-3">
             <button
+              type="button"
               className="admin-secondary"
               disabled={deleting}
               onClick={() => setDeleteTarget(null)}
@@ -338,6 +277,7 @@ export function AdminProductsPage() {
             </button>
 
             <button
+              type="button"
               className="rounded-xl bg-red-800 px-5 py-3 text-sm font-semibold text-white hover:bg-red-900 disabled:cursor-wait disabled:opacity-60"
               disabled={deleting}
               onClick={handleDelete}
