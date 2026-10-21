@@ -41,19 +41,12 @@ export function HomePage() {
     return () => controller.abort();
   }, [attempt]);
 
-  // O carrossel usa até seis capas, priorizando os destaques do painel.
-  const carouselProducts = useMemo(
-    () =>
-      [
-        ...products.filter(
-          (product) => product.featured && product.mainImage?.url,
-        ),
-        ...products.filter(
-          (product) => !product.featured && product.mainImage?.url,
-        ),
-      ].slice(0, 6),
-    [products],
-  );
+  // Use todas as capas em destaque; sem destaques, use as capas do catálogo.
+  const carouselProducts = useMemo(() => {
+    const withPhotos = products.filter((product) => product.mainImage?.url);
+    const featuredWithPhotos = withPhotos.filter((product) => product.featured);
+    return featuredWithPhotos.length ? featuredWithPhotos : withPhotos;
+  }, [products]);
 
   const featured = products.filter((product) => product.featured);
   const selection = [
