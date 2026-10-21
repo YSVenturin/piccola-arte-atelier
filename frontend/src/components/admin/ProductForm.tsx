@@ -171,6 +171,7 @@ export function ProductForm({
                     defaultValue={product?.[field.name] ?? ""}
                     maxLength={field.max}
                     rows={field.rows}
+                    required={field.required}
                   />
                 ) : (
                   <input

@@ -66,6 +66,8 @@ public class ProductImageService {
 
         Product product = findProductForUpdate(productId);
 
+        validateImageLimit(product);
+
         if (Boolean.TRUE.equals(request.mainImage())) {
             clearMainImages(product);
         }
@@ -135,6 +137,14 @@ public class ProductImageService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Product not found.")
                 );
+    }
+
+    private void validateImageLimit(Product product) {
+        if (product.getProductImages().size() >= 20) {
+            throw new InvalidRequestException(
+                    "A product may have at most 20 images."
+            );
+        }
     }
 
     private ProductImage findImage(Long imageId, Long productId) {
@@ -214,11 +224,7 @@ public class ProductImageService {
     ) {
         Product product = findProductForUpdate(productId);
 
-        if (product.getProductImages().size() >= 20) {
-            throw new InvalidRequestException(
-                    "A product may have at most 20 images."
-            );
-        }
+        validateImageLimit(product);
 
         if (altText != null && altText.length() > 200) {
             throw new InvalidRequestException(
