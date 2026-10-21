@@ -1,92 +1,88 @@
+import { InstagramIcon } from "../ui/InstagramIcon";
+import { FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router";
 
-import logoMarkDark from "../../assets/images/brand/brand-mark-dark.png";
+import logoMark from "../../assets/images/brand/brand-mark-dark.png";
+import { ATELIER, getWhatsAppUrl } from "../../config/atelier";
 import { ROUTES } from "../../routes/routePaths";
 import { PageContainer } from "./PageContainer";
 
-const navigationItems = [
-  {
-    label: "Início",
-    to: ROUTES.home,
-  },
-  {
-    label: "Produtos",
-    to: ROUTES.products,
-  },
-  {
-    label: "Sobre",
-    to: ROUTES.about,
-  },
-  {
-    label: "Contato",
-    to: ROUTES.contact,
-  },
-];
-
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="w-full bg-brand-900 text-brand-100">
-      <PageContainer className="py-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
-          <div className="max-w-md">
-            <Link
-              to={ROUTES.home}
-              className="inline-flex items-center gap-3"
-            >
-              <img
-                src={logoMarkDark}
-                alt=""
-                className="size-14 object-contain sm:size-16"
-              />
-
-              <span className="flex flex-col">
-                <span className="font-display text-2xl font-semibold tracking-wide sm:text-3xl">
-                  Piccola Arte
+    <footer className="bg-brand-900 text-brand-100">
+      <PageContainer>
+        <div className="mx-auto max-w-7xl px-2 pb-5 pt-8 sm:px-0">
+          <div className="grid gap-7 md:grid-cols-[1.2fr_0.7fr_1fr] md:gap-10">
+            <div>
+              <Link to={ROUTES.home} className="inline-flex items-center gap-3">
+                <img
+                  src={logoMark}
+                  alt=""
+                  width={48}
+                  height={48}
+                  className="size-11 object-contain"
+                />
+                <span>
+                  <span className="block font-display text-2xl font-semibold text-white">
+                    Piccola Arte
+                  </span>
+                  <span className="text-[0.6rem] uppercase tracking-[0.3em] text-brand-300">
+                    Atelier
+                  </span>
                 </span>
-
-                <span className="text-xs font-semibold uppercase tracking-[0.25rem] text-brand-300 sm:tracking-[0.3rem]">
-                  Atelier
-                </span>
-              </span>
-            </Link>
-
-            <p className="mt-5 max-w-sm text-sm leading-6 text-brand-200 sm:text-base">
-              Pequenas criações feitas à mão para transformar detalhes em
-              lembranças especiais.
-            </p>
-
-            <p className="mt-3 font-display text-lg italic text-brand-300 sm:text-xl">
-              Piccole creazioni, grande amore!
-            </p>
-          </div>
-
-          <div className="border-t border-brand-700 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.2rem] text-brand-300">
-              Navegação
-            </h2>
-
-            <nav
-              aria-label="Navegação do rodapé"
-              className="mt-5 flex flex-col items-start gap-3"
-            >
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className="text-sm text-brand-100 transition-colors hover:text-brand-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              </Link>
+              <p className="mt-3 max-w-xs text-sm leading-6 text-brand-200">
+                Cerâmica fria feita à mão. Piccole creazioni, grande amore!
+              </p>
+            </div>
+            <nav aria-label="Navegação do rodapé">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-accent-200">
+                Explore
+              </h2>
+              <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-sm md:grid-cols-1">
+                {[
+                  { label: "Início", to: ROUTES.home },
+                  { label: "Peças", to: ROUTES.products },
+                  { label: "O Atelier", to: ROUTES.about },
+                  { label: "Contato", to: ROUTES.contact },
+                ].map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="w-fit py-1.5 text-brand-100 hover:text-accent-200"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </nav>
+            <div>
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-accent-200">
+                Vamos conversar
+              </h2>
+              <a
+                href={getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex w-fit items-center gap-2 py-1.5 text-sm text-brand-100 hover:text-accent-200"
+              >
+                <FaWhatsapp className="size-4" aria-hidden="true" />
+                {ATELIER.phoneDisplay}
+              </a>
+              <a
+                href={ATELIER.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-fit items-center gap-2 py-1.5 text-sm text-brand-100 hover:text-accent-200"
+              >
+                <InstagramIcon className="size-4 shrink-0" aria-hidden="true" />
+                {ATELIER.instagramHandle}
+              </a>
+            </div>
           </div>
-        </div>
-
-        <div className="mt-8 border-t border-brand-700 pt-5 text-center">
-          <p className="text-xs leading-5 text-brand-300 sm:text-sm">
-            © {currentYear} Piccola Arte Atelier. Todos os direitos reservados.
+          <p className="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-brand-300">
+            © {new Date().getFullYear()} Piccola Arte Atelier. Todos os direitos
+            reservados.
           </p>
         </div>
       </PageContainer>

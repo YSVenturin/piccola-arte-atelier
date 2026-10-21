@@ -2,10 +2,10 @@ import { PageContainer } from "../components/layout/PageContainer";
 
 export function AboutPage() {
   return (
-    <section className="py-16 sm:py-24">
+    <section className="py-10 sm:py-14">
       <PageContainer>
-        <div className="mx-auto max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-brand-600">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-600">
             Nossa história
           </p>
 

@@ -2,7 +2,6 @@ import {
   ArrowUpRight,
   Check,
   ChevronDown,
-  Search,
   SlidersHorizontal,
   X,
 } from "lucide-react";
@@ -41,7 +40,6 @@ export function CategoryFilter({
 
   const id = useId();
   const panelId = `${id}-panel`;
-  const searchId = `${id}-search`;
 
   useEffect(() => {
     if (isOpen && status === "success") {
@@ -156,29 +154,10 @@ export function CategoryFilter({
           }
         }}
         className="
-          mt-4 max-w-5xl rounded-3xl border border-brand-200
+          mt-4 max-w-full rounded-3xl border border-brand-200
           bg-white/80 p-4 shadow-sm sm:p-6
         "
       >
-        <div className="mb-5 flex items-center justify-between gap-3">
-          <h2 className="font-display text-3xl font-semibold text-brand-900">
-            O que você procura?
-          </h2>
-
-          <button
-            type="button"
-            onClick={closePanel}
-            aria-label="Fechar categorias"
-            className="
-              inline-flex size-11 shrink-0 items-center justify-center
-              rounded-full bg-brand-100 text-brand-800
-              transition hover:bg-brand-200
-            "
-          >
-            <X className="size-4" aria-hidden="true" />
-          </button>
-        </div>
-
         {status === "loading" && (
           <p role="status" className="py-6 text-sm text-brand-600">
             Carregando categorias...
@@ -203,41 +182,12 @@ export function CategoryFilter({
 
         {status === "success" && (
           <>
-            <label htmlFor={searchId} className="sr-only">
-              Buscar categoria
-            </label>
-
-            <div className="relative mb-5">
-              <Search
-                aria-hidden="true"
-                className="
-                  pointer-events-none absolute left-3.5 top-1/2
-                  size-4 -translate-y-1/2 text-brand-600
-                "
-              />
-
-              <input
-                ref={searchRef}
-                id={searchId}
-                type="search"
-                autoComplete="off"
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder="Buscar uma categoria..."
-                className="
-                  min-h-12 w-full rounded-xl border border-brand-200
-                  bg-brand-50 py-3 pl-10 pr-4 text-base
-                  text-brand-900 placeholder:text-brand-600
-                "
-              />
-            </div>
-
             <div
               role="group"
               aria-label="Escolha uma categoria"
               className="
                 grid max-h-80 grid-cols-2 gap-2.5 overflow-y-auto
-                overscroll-contain p-1 sm:grid-cols-3 lg:grid-cols-4
+                overscroll-contain p-1 sm:grid-cols-3 lg:grid-cols-6
               "
             >
               {options.map((category) => {

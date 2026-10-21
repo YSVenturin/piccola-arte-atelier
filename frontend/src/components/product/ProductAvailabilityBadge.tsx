@@ -35,7 +35,7 @@ function getAvailabilityStatus(
   if (product.available) {
     return {
       label: "Disponível",
-      className: "bg-emerald-50 text-emerald-800 ring-emerald-200",
+      className: "bg-brand-900 text-brand-50 ring-brand-900/10",
     };
   }
 
