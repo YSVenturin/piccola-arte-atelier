@@ -80,10 +80,18 @@ export function Footer() {
               </a>
             </div>
           </div>
-          <p className="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-brand-300">
-            © {new Date().getFullYear()} Piccola Arte Atelier. Todos os direitos
-            reservados.
-          </p>
+          <div className="mt-6 flex flex-col gap-2 border-t border-white/10 pt-4 text-xs leading-5 text-brand-300 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              © {new Date().getFullYear()} Piccola Arte Atelier. Todos os direitos
+              reservados.
+            </p>
+            <a
+              href="/privacidade.html"
+              className="w-fit underline underline-offset-4 transition hover:text-accent-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-200"
+            >
+              Política de privacidade
+            </a>
+          </div>
         </div>
       </PageContainer>
     </footer>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Como o Piccola Arte Atelier utiliza dados na navegação, no contato e na integração administrativa com o Google Drive." />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>Política de Privacidade | Piccola Arte Atelier</title>
+    <style>
+      :root { color-scheme: light; --ink: #183f32; --muted: #52645b; --paper: #faf8f2; --line: #dbe2d8; --accent: #92623c; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.8 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .container { width: min(100% - 40px, 800px); margin-inline: auto; }
+      header { border-bottom: 1px solid var(--line); padding: 28px 0; }
+      header .container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+      .brand { color: var(--ink); text-decoration: none; font: 600 25px/1.1 Georgia, serif; }
+      .brand small { display: block; margin-top: 7px; font: 10px/1.3 system-ui, sans-serif; letter-spacing: .3em; text-transform: uppercase; }
+      a { color: #245c43; text-underline-offset: 4px; }
+      a:hover { color: var(--accent); }
+      a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+      .back { font-size: 14px; }
+      main { padding: 48px 0 60px; }
+      .eyebrow { margin: 0 0 14px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+      h1 { margin: 0; font: 500 clamp(2.1rem, 7vw, 3.25rem)/1.13 Georgia, serif; letter-spacing: -.025em; }
+      .updated { margin: 16px 0 26px; font-size: 13px; color: var(--muted); }
+      .intro { font-size: 18px; line-height: 1.75; }
+      h2 { margin: 32px 0 10px; font-size: 18px; line-height: 1.45; }
+      p { margin: 0 0 16px; }
+      ul { padding-left: 22px; margin: 10px 0 20px; }
+      li + li { margin-top: 8px; }
+      section { scroll-margin-top: 24px; }
+      .contact { margin-top: 36px; border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: #f0f2e9; }
+      .contact h2 { margin-top: 0; }
+      .contact p:last-child { margin-bottom: 0; }
+      footer { border-top: 1px solid var(--line); padding: 24px 0 32px; color: var(--muted); font-size: 13px; }
+      @media (max-width: 480px) { .container { width: calc(100% - 32px); } main { padding-top: 32px; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <a class="brand" href="/">Piccola Arte<small>Atelier</small></a>
+        <a class="back" href="/">Voltar ao catálogo</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Política de Privacidade</h1>
+      <p class="updated">Atualizada em 21 de outubro de 2026.</p>
+      <p class="intro">A administração do Piccola Arte Atelier utiliza informações para operar o site, atender contatos e proteger os dados.</p>
+
+      <section aria-labelledby="dados">
+        <h2 id="dados">Dados e cookies</h2>
+        <p>Utilizamos dados técnicos de navegação para funcionamento e segurança, cookies essenciais para o painel administrativo e informações fornecidas no contato para atender mensagens e encomendas. A hospedagem é realizada pela DigitalOcean. Contatos pelo WhatsApp e Instagram também seguem as políticas desses serviços.</p>
+      </section>
+
+      <section aria-labelledby="google-drive">
+        <h2 id="google-drive">Google Drive</h2>
+        <p>Quando ativada, a integração administrativa Piccola Backup utiliza uma conta Google Drive autorizada para armazenar e restaurar cópias criptografadas do catálogo, imagens e dados administrativos. O acesso permite criar, consultar, atualizar e excluir arquivos criados pela integração. As credenciais ficam restritas à administração do ateliê.</p>
+        <p>Dados acessados no Drive são usados exclusivamente para backups, sem venda, publicidade ou treinamento de IA. O tratamento ocorre pela administração e pelos provedores citados, conforme essas finalidades.</p>
+        <p>A autorização pode ser revogada nas <a href="https://myaccount.google.com/connections">conexões da Conta Google</a>. Revogar o acesso não exclui arquivos já armazenados no Drive.</p>
+      </section>
+
+      <section class="contact" aria-labelledby="contato">
+        <h2 id="contato">Conservação e contato</h2>
+        <p>Conservamos as informações pelo tempo necessário às finalidades descritas e às obrigações aplicáveis. Os backups seguem o ciclo de retenção configurado.</p>
+        <p>Para solicitar acesso, correção ou exclusão de dados, ou tirar dúvidas sobre esta política, fale com a administração do ateliê pelos <a href="/contato">canais de contato</a>.</p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">Piccola Arte Atelier · <a href="/">Catálogo</a> · <a href="/contato">Contato</a></div>
+    </footer>
+  </body>
+</html>
