@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.http.ProblemDetail;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -75,6 +76,38 @@ public class GlobalExceptionHandler {
         p.setTitle("Invalid request");
 
         return p;
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ProblemDetail handleUploadTooLarge(
+            MaxUploadSizeExceededException exception
+    ) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.PAYLOAD_TOO_LARGE,
+                "Image file must not exceed 5 MiB."
+        );
+
+        problem.setTitle("Upload too large");
+
+        return problem;
+    }
+
+    @ExceptionHandler(ImageStorageException.class)
+    public ProblemDetail handleImageStorage(
+            ImageStorageException exception
+    ) {
+        org.slf4j.LoggerFactory
+                .getLogger(GlobalExceptionHandler.class)
+                .error("Image storage failed.", exception);
+
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Could not store the image. Please try again later."
+        );
+
+        problem.setTitle("Image storage failed");
+
+        return problem;
     }
 
     public record FieldValidationError(

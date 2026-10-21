@@ -12,6 +12,8 @@ import com.yuri.piccolaarte.repositories.ProductRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.yuri.piccolaarte.entities.ProductImage;
+import com.yuri.piccolaarte.storage.ImageStorageService;
 
 import java.util.List;
 import java.util.Set;
@@ -21,10 +23,12 @@ public class AdminProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ImageStorageService imageStorage;
 
-    public AdminProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public AdminProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ImageStorageService imageStorage) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.imageStorage = imageStorage;
     }
 
     @Transactional(readOnly = true)
@@ -85,8 +89,15 @@ public class AdminProductService {
                         new ResourceNotFoundException("Product not found.")
                 );
 
+        List<String> imageUrls = product.getProductImages()
+                .stream()
+                .map(ProductImage::getUrl)
+                .toList();
+
         productRepository.delete(product);
         productRepository.flush();
+
+        imageUrls.forEach(imageStorage::deleteAfterCommit);
     }
 
     private Product findProduct(Long id) {

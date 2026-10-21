@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.yuri.piccolaarte.dtos.ProductImageOrderDTO;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.net.URI;
 import java.util.List;
 
@@ -77,5 +82,36 @@ public class ProductImageController {
         productImageService.delete(productId, imageId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(
+            value = "/upload",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<ProductImageResponseDTO> upload(
+            @PathVariable Long productId,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "altText", required = false) String altText
+    ) {
+        ProductImageResponseDTO image =
+                productImageService.upload(productId, file, altText);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/api/admin/products/{productId}/images/{imageId}")
+                .buildAndExpand(productId, image.id())
+                .toUri();
+
+        return ResponseEntity.created(location).body(image);
+    }
+
+    @PutMapping("/order")
+    public ResponseEntity<List<ProductImageResponseDTO>> reorder(
+            @PathVariable Long productId,
+            @Valid @RequestBody ProductImageOrderDTO request
+    ) {
+        return ResponseEntity.ok(
+                productImageService.reorder(productId, request)
+        );
     }
 }

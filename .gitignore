@@ -145,8 +145,9 @@ uploads/
 files/
 **/files/
 
-storage/
-**/storage/
+# Dados armazenados em disco, relativos à raiz do repositório
+/storage/
+/backend/storage/
 
 *.pem
 *.key
