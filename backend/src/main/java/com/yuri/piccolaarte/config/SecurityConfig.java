@@ -84,6 +84,7 @@ public class SecurityConfig {
                                 "/api/products/**",
                                 "/api/categories",
                                 "/api/categories/**",
+                                "/api/sitemap.xml",
                                 "/api/auth/csrf",
                                 "/images/uploads/**"
                         )
@@ -91,6 +92,7 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 HttpMethod.HEAD,
+                                "/api/sitemap.xml",
                                 "/images/uploads/**"
                         )
                         .permitAll()
