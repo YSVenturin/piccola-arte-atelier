@@ -150,12 +150,13 @@ export function ProductListPage() {
             </p>
 
             <h1 className="mt-3 font-display text-4xl font-semibold text-brand-900 sm:text-6xl">
-              Peças artesanais
+              Peças em cerâmica fria
             </h1>
 
             <p className="mt-4 leading-7 text-brand-700">
-              Conheça as criações da Piccola Arte, produzidas à mão com cuidado em
-              cada detalhe.
+              Chaveiros, ímãs, incensários e outras peças artesanais para decorar
+              ou presentear. Explore as criações feitas à mão da Piccola Arte
+              Atelier.
             </p>
           </header>
 

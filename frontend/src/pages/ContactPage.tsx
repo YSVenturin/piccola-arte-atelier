@@ -14,12 +14,13 @@ export function ContactPage() {
             </p>
 
             <h1 className="mt-3 font-display text-4xl font-semibold leading-tight text-brand-900 sm:text-5xl lg:text-6xl">
-              Vamos conversar?
+              Contato e encomendas
             </h1>
 
             <p className="mt-4 text-base leading-7 text-brand-700">
-              Gostou de uma peça, tem alguma dúvida ou quer fazer uma
-              encomenda?
+              Quer encomendar uma peça em cerâmica fria ou saber mais sobre uma
+              criação? Fale com a Piccola Arte Atelier para consultar
+              disponibilidade, personalização e prazos.
             </p>
           </header>
 

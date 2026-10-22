@@ -95,7 +95,9 @@ export function HomeCareGuide() {
           Cuidados com sua peça
         </h2>
         <p className="mt-4 max-w-sm text-sm leading-7 text-brand-800 sm:text-base">
-          Pequenos cuidados ajudam a preservar sua peça artesanal por muito mais tempo.
+          Para cuidar da sua peça de cerâmica fria, evite contato com água e
+          alimentos. Na limpeza, use um pano seco ou levemente úmido, sem
+          produtos químicos.
         </p>
         <a
           href={ATELIER.instagramUrl}

@@ -193,13 +193,13 @@ export function HomeProductCarousel({
           <span className="italic text-brand-200">grande amore!</span>
         </h1>
         <p className="mt-4 max-w-sm text-sm leading-6 text-brand-200">
-          Criações para dar personalidade ao seu cantinho e tornar um presente ainda mais especial.
+          Peças artesanais em cerâmica fria para decorar seu cantinho e presentear com carinho.
         </p>
         <Link
           to={ROUTES.products}
           className="mt-4 inline-flex min-h-11 w-fit items-center gap-3 rounded-full bg-brand-50 px-5 py-2.5 text-xs font-semibold text-brand-900 transition-colors hover:bg-brand-200 md:mt-5"
         >
-          Encontrar minha peça <ArrowRight className="size-4" aria-hidden="true" />
+          Conhecer as peças <ArrowRight className="size-4" aria-hidden="true" />
         </Link>
       </div>
 
