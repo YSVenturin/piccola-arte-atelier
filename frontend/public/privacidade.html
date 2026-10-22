@@ -6,11 +6,12 @@
     <meta name="description" content="Como o Piccola Arte Atelier utiliza dados na navegação, no contato e na integração administrativa com o Google Drive." />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <title>Política de Privacidade | Piccola Arte Atelier</title>
+    <link rel="stylesheet" href="/layout.css" />
     <style>
       :root { color-scheme: light; --ink: #183f32; --muted: #52645b; --paper: #faf8f2; --line: #dbe2d8; --accent: #92623c; }
       * { box-sizing: border-box; }
       body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.8 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      .container { width: min(100% - 40px, 800px); margin-inline: auto; }
+      main.container > * { max-width: 50rem; }
       header { border-bottom: 1px solid var(--line); padding: 28px 0; }
       header .container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
       .brand { color: var(--ink); text-decoration: none; font: 600 25px/1.1 Georgia, serif; }
@@ -33,18 +34,18 @@
       .contact h2 { margin-top: 0; }
       .contact p:last-child { margin-bottom: 0; }
       footer { border-top: 1px solid var(--line); padding: 24px 0 32px; color: var(--muted); font-size: 13px; }
-      @media (max-width: 480px) { .container { width: calc(100% - 32px); } main { padding-top: 32px; } }
+      @media (max-width: 480px) { main { padding-top: 32px; } }
     </style>
   </head>
   <body>
     <header>
-      <div class="container">
+      <div class="container page-container">
         <a class="brand" href="/">Piccola Arte<small>Atelier</small></a>
         <a class="back" href="/">Voltar ao catálogo</a>
       </div>
     </header>
 
-    <main class="container">
+    <main class="container page-container">
       <h1>Política de Privacidade</h1>
       <p class="updated">Atualizada em 21 de outubro de 2026.</p>
       <p class="intro">A administração do Piccola Arte Atelier utiliza informações para operar o site, atender contatos e proteger os dados.</p>
@@ -69,7 +70,7 @@
     </main>
 
     <footer>
-      <div class="container">Piccola Arte Atelier · <a href="/">Catálogo</a> · <a href="/contato">Contato</a></div>
+      <div class="container page-container">Piccola Arte Atelier · <a href="/">Catálogo</a> · <a href="/contato">Contato</a></div>
     </footer>
   </body>
 </html>

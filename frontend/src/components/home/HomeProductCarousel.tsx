@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 
@@ -24,7 +24,6 @@ export function HomeProductCarousel({
   const [keyboardFocused, setKeyboardFocused] = useState(false);
   const [interactionVersion, setInteractionVersion] = useState(0);
   const [hovered, setHovered] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [hidden, setHidden] = useState(
     () => typeof document !== "undefined" && document.hidden,
   );
@@ -68,7 +67,7 @@ export function HomeProductCarousel({
     : slides;
   const trackPosition = loopPosition ?? (multiple ? activeIndex + 1 : 0);
   const rotating = multiple && loopPosition === null && !hovered &&
-    !keyboardFocused && !hidden && !reducedMotion && !paused;
+    !keyboardFocused && !hidden && !reducedMotion;
 
   const select = useCallback((index: number) => {
     if (!slides.length || loopPosition !== null) return;
@@ -135,7 +134,7 @@ export function HomeProductCarousel({
       role="region"
       aria-roledescription="carrossel"
       aria-label="Fotos das peças do atelier"
-      className="mx-auto grid max-w-6xl touch-pan-y overflow-hidden rounded-2xl bg-brand-50 shadow-sm md:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]"
+      className="grid w-full min-w-0 touch-pan-y overflow-hidden rounded-2xl bg-brand-50 shadow-sm md:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]"
       onPointerEnter={(event) => {
         if (event.pointerType === "mouse") setHovered(true);
       }}
@@ -299,20 +298,6 @@ export function HomeProductCarousel({
                       </button>
                     ))}
                   </div>
-                  {!reducedMotion && (
-                    <button
-                      type="button"
-                      aria-label={paused ? "Retomar troca automática" : "Pausar troca automática"}
-                      onClick={() => {
-                        setPaused((previous) => !previous);
-                        setKeyboardFocused(false);
-                        setHovered(false);
-                      }}
-                      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full hover:bg-white/15"
-                    >
-                      {paused ? <Play className="size-3.5" aria-hidden="true" /> : <Pause className="size-3.5" aria-hidden="true" />}
-                    </button>
-                  )}
                 </div>
               </div>
             </>

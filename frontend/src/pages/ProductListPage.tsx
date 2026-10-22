@@ -143,7 +143,7 @@ export function ProductListPage() {
   return (
     <section className="py-10 sm:py-14">
       <PageContainer>
-        <div className="mx-auto max-w-7xl px-2 sm:px-0">
+        <div className="min-w-0">
           <header className="max-w-5xl">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-600">
               Catálogo

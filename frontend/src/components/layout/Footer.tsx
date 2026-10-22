@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <footer className="bg-brand-900 text-brand-100">
       <PageContainer>
-        <div className="mx-auto max-w-7xl px-2 pb-5 pt-8 sm:px-0">
+        <div className="pb-5 pt-8">
           <div className="grid gap-7 md:grid-cols-[1.2fr_0.7fr_1fr] md:gap-10">
             <div>
               <Link to={ROUTES.home} className="inline-flex items-center gap-3">

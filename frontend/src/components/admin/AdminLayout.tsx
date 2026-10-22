@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router";
 import logoMark from "../../assets/images/brand/logo-mark.webp";
 import { useAuth } from "../../auth/AuthContext";
 import { LogoutButton } from "./LogoutButton";
+import { PageContainer } from "../layout/PageContainer";
 
 export function AdminLayout() {
   const { user } = useAuth();
@@ -59,33 +60,37 @@ export function AdminLayout() {
       </aside>
 
       <div className="min-w-0">
-        <header className="flex flex-wrap items-center justify-between gap-5 border-b border-brand-200 px-6 py-5 lg:px-10">
-          <div className="min-w-0">
-            <p className="text-xs text-brand-600">
-              Conectado como
-            </p>
+        <header className="border-b border-brand-200">
+          <PageContainer className="flex flex-wrap items-center justify-between gap-5 py-5">
+            <div className="min-w-0">
+              <p className="text-xs text-brand-600">
+                Conectado como
+              </p>
 
-            <p className="break-all text-sm font-semibold">
-              {user?.email}
-            </p>
-          </div>
+              <p className="break-all text-sm font-semibold">
+                {user?.email}
+              </p>
+            </div>
 
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to="/produtos"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm underline underline-offset-4"
-            >
-              Ver catálogo ↗
-            </Link>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                to="/produtos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm underline underline-offset-4"
+              >
+                Ver catálogo ↗
+              </Link>
 
-            <LogoutButton />
-          </div>
+              <LogoutButton />
+            </div>
+          </PageContainer>
         </header>
 
-        <main className="mx-auto max-w-6xl px-6 py-8 lg:px-10 lg:py-12">
-          <Outlet />
+        <main className="py-8 lg:py-12">
+          <PageContainer>
+            <Outlet />
+          </PageContainer>
         </main>
       </div>
     </div>

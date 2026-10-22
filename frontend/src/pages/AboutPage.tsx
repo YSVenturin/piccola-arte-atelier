@@ -4,7 +4,7 @@ export function AboutPage() {
   return (
     <section className="py-10 sm:py-14">
       <PageContainer>
-        <div className="mx-auto max-w-7xl">
+        <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-600">
             Nossa história
           </p>

@@ -163,7 +163,7 @@ export function ProductDetailsPage() {
   return (
     <section className="py-8 sm:py-12">
       <PageContainer>
-        <div className="mx-auto max-w-7xl px-2 sm:px-0">
+        <div className="min-w-0">
           <Link
           to={ROUTES.products}
           className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 transition hover:text-brand-900"

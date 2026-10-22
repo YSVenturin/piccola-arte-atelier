@@ -29,7 +29,7 @@ export function Header() {
         Pular para o conteúdo
       </a>
       <PageContainer>
-        <div className="mx-auto flex min-h-18 max-w-7xl items-center justify-between gap-3 px-2 sm:px-0 lg:min-h-20">
+        <div className="flex min-h-18 items-center justify-between gap-3 lg:min-h-20">
           <Link
             to={ROUTES.home}
             onClick={() => setIsMenuOpen(false)}
@@ -123,7 +123,7 @@ export function Header() {
         }}
       >
         <PageContainer>
-          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-2 py-3 sm:px-0">
+          <div className="flex flex-col gap-1 py-3">
             {navigationItems.map((item) => (
               <NavLink
                 key={item.to}
