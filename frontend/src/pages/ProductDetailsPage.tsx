@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router";
 
 import { PageContainer } from "../components/layout/PageContainer";
+import { getProductMetadata, PAGE_METADATA } from "../config/pageMetadata";
+import { usePageMetadata } from "../hooks/usePageMetadata";
 import { ErrorMessage } from "../components/ui/ErrorMessage";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner";
 import { ProductGallery } from "../components/product/ProductGallery";
@@ -44,6 +46,15 @@ export function ProductDetailsPage() {
   const [status, setStatus] = useState<LoadStatus>("loading");
   const [error, setError] = useState<string | null>(null);
   const [requestVersion, setRequestVersion] = useState(0);
+
+  const metadata = status === "success" && product && product.slug === slug
+    ? getProductMetadata(product)
+    : status === "not-found"
+      ? PAGE_METADATA.productNotFound
+      : status === "error"
+        ? PAGE_METADATA.productError
+        : PAGE_METADATA.productLoading;
+  usePageMetadata(metadata);
 
   useEffect(() => {
     if (!slug) {
