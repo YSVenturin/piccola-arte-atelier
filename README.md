@@ -10,6 +10,31 @@ Piccola Arte Atelier is a web application developed for a small handmade-goods b
 
 This is a **product catalog, not an online checkout system**. The project connects a React frontend to a Java/Spring Boot REST API backed by PostgreSQL and is deployed to a Linux server.
 
+## Screenshots
+
+### Home page — desktop
+
+The landing page presents the brand, featured products, and information.
+
+<p align="center">
+  <img src="docs/home-desktop.png" alt="Piccola Arte Atelier home page on desktop" width="100%" />
+</p>
+
+### Product catalog — desktop and mobile
+
+The catalog adapts to different screen sizes and displays product categories and availability information.
+
+<table>
+  <tr>
+    <td width="70%" align="center"><strong>Desktop</strong></td>
+    <td width="30%" align="center"><strong>Mobile</strong></td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/catalog-desktop.png" alt="Product catalog displayed on desktop" width="100%" /></td>
+    <td valign="top"><img src="docs/catalog-mobile.png" alt="Responsive product catalog displayed on a mobile screen" width="100%" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - Responsive public catalog with category-based filtering.
@@ -97,8 +122,6 @@ From the `frontend/` directory, run:
 `npm run dev`
 
 Open the local URL printed by Vite. Make sure the frontend's API configuration points to the running backend.
-
-> **Note:** Local database credentials and any environment-specific configuration must be supplied by the developer. Do not commit production secrets to the repository.
 
 ## Development process and AI assistance
 
