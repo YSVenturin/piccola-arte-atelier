@@ -78,6 +78,12 @@ export function Footer() {
                 <InstagramIcon className="size-4 shrink-0" aria-hidden="true" />
                 {ATELIER.instagramHandle}
               </a>
+              <a
+                href={`mailto:${ATELIER.email}`}
+                className="flex w-fit items-center py-1.5 text-sm text-brand-100 hover:text-accent-200"
+              >
+                {ATELIER.email}
+              </a>
             </div>
           </div>
           <div className="mt-6 flex flex-col gap-2 border-t border-white/10 pt-4 text-xs leading-5 text-brand-300 sm:flex-row sm:items-center sm:justify-between">
@@ -85,6 +91,7 @@ export function Footer() {
               © {new Date().getFullYear()} Piccola Arte Atelier. Todos os direitos
               reservados.
             </p>
+            <p>CNPJ: {ATELIER.cnpj}</p>
             <a
               href="/privacidade.html"
               className="w-fit underline underline-offset-4 transition hover:text-accent-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-200"
